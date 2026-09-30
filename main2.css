@@ -80,7 +80,7 @@ header {
     align-items: center;
 }
 
-/* Фоновые элементы (оставлены, так как не ломают верстку, но анимация убрана) */
+/* Фоновые анимированные элементы */
 .hero::before,
 .hero::after {
     content: '';
@@ -91,9 +91,15 @@ header {
 }
 .hero::before {
     background: conic-gradient(at 50% 50%, var(--primary), transparent);
+    animation: rotate 20s linear infinite;
 }
 .hero::after {
     background: radial-gradient(circle at 50% bottom, rgba(255, 83, 100, 0.2), transparent);
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
 }
 
 /* Сетка контента */
@@ -117,6 +123,7 @@ header {
     letter-spacing: -0.03em;
 }
 
+/* ИСПРАВЛЕНО: Анимация пульсации для кнопки цены */
 .price-badge {
     background: linear-gradient(90deg, var(--accent), #ff768d);
     color: white;
@@ -127,6 +134,12 @@ header {
     display: inline-block;
     margin-bottom: 30px;
     box-shadow: 0 5px 15px rgba(255, 83, 100, 0.4);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.price-badge:hover {
+    transform: scale(1.05); /* Легкое увеличение */
+    box-shadow: 0 8px 20px rgba(255, 83, 100, 0.5);
 }
 
 .hero-text p {
@@ -136,7 +149,7 @@ header {
     max-width: 500px;
 }
 
-/* ИСПРАВЛЕНО: Убрана анимация floatImage, которая могла давать субпиксельные смещения */
+/* Анимация картинки мастера */
 .hero-image img {
     width: 100%;
     max-width: 480px;
@@ -145,23 +158,31 @@ header {
     object-fit: cover;
     box-shadow: 0 20px 60px rgba(0,0,0,0.4);
     border: 2px solid rgba(255,255,255,0.1);
+    animation: floatImage 8s ease-in-out infinite;
+}
+
+@keyframes floatImage {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-10px) rotate(2deg); }
 }
 
 /* --- About Section --- */
 .about {
     padding: 120px 0;
     position: relative;
+    overflow: hidden;
 }
+
 .about::before {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
-    height: 1000px;
-    background: conic-gradient(from 180deg at 50% 0%, var(--primary) 30deg, transparent 120deg);
-    opacity: 0.05;
+    height: 100%;
+    background: linear-gradient(180deg, #161b2a 0%, #0b0d17 100%);
     z-index: 0;
+    pointer-events: none;
 }
 
 .about-inner {
@@ -199,34 +220,53 @@ header {
     font-size: 18px;
 }
 
-/* ИСПРАВЛЕНО: Картинка, которая ломала верстку */
 .about-image img {
-    width: 100%; /* Занимает ширину родителя */
-    max-width: 600px; /* Ограничение для десктопа */
-    height: auto; /* Сохраняет пропорции вместо фиксированных 600px */
+    width: 100%;
+    max-width: 600px;
+    height: auto;
     object-fit: cover;
     border-radius: 20px;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.4);
     border: 2px solid rgba(255,255,255,0.1);
     display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 /* --- Portfolio --- */
 .portfolio {
     padding: 120px 0;
-    background: var(--bg-dark);
+    position: relative;
+    overflow: hidden;
 }
+
+.portfolio::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    background: linear-gradient(180deg, #0b0d17 0%, #050609 100%);
+    z-index: 0;
+    pointer-events: none;
+}
+
 .portfolio h2 {
     text-align: center;
     font-size: 42px;
     margin-bottom: 80px;
     color: white;
+    position: relative;
+    z-index: 1;
 }
 
 .gallery {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 30px;
+    position: relative;
+    z-index: 1;
 }
 
 .gallery-item {
@@ -254,19 +294,37 @@ header {
 /* --- Conditions --- */
 .conditions {
     padding: 120px 0;
-    background: linear-gradient(135deg, #161b2a 0%, #0b0d17 100%);
+    position: relative;
+    overflow: hidden;
 }
+
+.conditions::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    background: linear-gradient(180deg, #050609 0%, #0b0d17 100%);
+    z-index: 0;
+    pointer-events: none;
+}
+
 .conditions h2 {
     text-align: center;
     font-size: 42px;
     margin-bottom: 80px;
     color: white;
+    position: relative;
+    z-index: 1;
 }
 
 .conditions-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 30px;
+    position: relative;
+    z-index: 1;
 }
 
 .condition-item {
@@ -289,16 +347,33 @@ header {
     font-size: 22px;
 }
 
-/* --- Socials --- */
+/* --- Socials (ИСПРАВЛЕНО: кнопки теперь видны всегда) --- */
 .socials {
     padding: 100px 0;
-    background: var(--bg-dark);
-    text-align: center;
+    position: relative;
+    overflow: hidden;
+    background-color: var(--bg-dark);
 }
+
+.socials::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    background: linear-gradient(180deg, #0b0d17 0%, #050609 100%);
+    z-index: 0;
+    pointer-events: none;
+}
+
 .socials h2 {
     font-size: 36px;
     margin-bottom: 60px;
     color: white;
+    position: relative;
+    z-index: 1;
+    text-align: center;
 }
 
 .socials-grid {
@@ -306,6 +381,8 @@ header {
     justify-content: center;
     gap: 40px;
     flex-wrap: wrap;
+    position: relative;
+    z-index: 1;
 }
 
 .social-link {
@@ -315,19 +392,23 @@ header {
     gap: 15px;
     padding: 20px 30px;
     background: var(--bg-card);
+    border: 1px solid rgba(255, 255, 255, 0.15); /* Четкая граница */
     border-radius: 50px;
     text-decoration: none;
     color: var(--text-light);
     font-weight: 600;
     font-size: 18px;
     transition: all 0.3s ease;
-    box-shadow: var(--shadow);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.05);
     min-width: 220px;
-    border: 1px solid rgba(255,255,255,0.1);
+    position: relative;
+    z-index: 1;
 }
+
 .social-link:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+    transform: translateY(-5px); /* Эффект отдаления */
+    box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+    border-color: var(--primary);
 }
 
 .social-link .icon {
@@ -370,7 +451,7 @@ footer {
         gap: 40px;
     }
     .about-image img {
-        max-width: 500px; /* Уменьшаем лимит для средних экранов */
+        max-width: 500px;
     }
     .hero-text h1 {
         font-size: clamp(2.5rem, 6vw, 4rem);
@@ -394,7 +475,7 @@ footer {
     }
     
     .hero-image img, .about-image img {
-        max-width: 100%; /* Картинка строго вписывается в экран */
+        max-width: 100%;
         height: auto;
     }
     
