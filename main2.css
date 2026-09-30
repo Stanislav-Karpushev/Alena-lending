@@ -11,6 +11,7 @@
     --shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
 }
 
+/* Базовые настройки и сброс */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -25,13 +26,14 @@ body {
     overflow-x: hidden;
 }
 
+/* Контейнер */
 .container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
 }
 
-/* Glassmorphism */
+/* Стеклянные карточки (используются в условиях) */
 .glass-card {
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.1);
@@ -41,7 +43,7 @@ body {
     padding: 30px;
 }
 
-/* Header */
+/* --- Header --- */
 header {
     position: fixed;
     top: 0;
@@ -65,10 +67,9 @@ header {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    
 }
 
-/* Hero Section */
+/* --- Hero Section --- */
 .hero {
     padding: 160px 0 140px;
     background: linear-gradient(135deg, var(--bg-dark) 0%, #1a1f32 100%);
@@ -79,6 +80,7 @@ header {
     align-items: center;
 }
 
+/* Фоновые элементы (оставлены, так как не ломают верстку, но анимация убрана) */
 .hero::before,
 .hero::after {
     content: '';
@@ -87,22 +89,14 @@ header {
     opacity: 0.1;
     pointer-events: none;
 }
-
 .hero::before {
     background: conic-gradient(at 50% 50%, var(--primary), transparent);
-    animation: rotate 20s linear infinite;
 }
-
 .hero::after {
     background: radial-gradient(circle at 50% bottom, rgba(255, 83, 100, 0.2), transparent);
 }
 
-@keyframes rotate {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-}
-
-/* Сетка работает ВНУТРИ контейнера */
+/* Сетка контента */
 .hero-content {
     position: relative;
     z-index: 1;
@@ -142,6 +136,7 @@ header {
     max-width: 500px;
 }
 
+/* ИСПРАВЛЕНО: Убрана анимация floatImage, которая могла давать субпиксельные смещения */
 .hero-image img {
     width: 100%;
     max-width: 480px;
@@ -150,36 +145,13 @@ header {
     object-fit: cover;
     box-shadow: 0 20px 60px rgba(0,0,0,0.4);
     border: 2px solid rgba(255,255,255,0.1);
-    animation: floatImage 8s ease-in-out infinite;
 }
 
-.floating-dot {
-    position: absolute;
-    border-radius: 50%;
-    background: rgba(79, 172, 254, 0.15);
-    filter: blur(15px);
-    pointer-events: none;
-}
-
-.dot-1 { width: 200px; height: 200px; top: 10%; right: 10%; animation: float 6s ease-in-out infinite; }
-.dot-2 { width: 150px; height: 150px; bottom: 15%; left: 5%; animation: float 8s ease-in-out infinite reverse; }
-
-@keyframes float {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-20px); }
-}
-
-@keyframes floatImage {
-    0%, 100% { transform: translateY(0px) rotate(0deg); }
-    50% { transform: translateY(-10px) rotate(2deg); }
-}
-
-/* About Section */
+/* --- About Section --- */
 .about {
     padding: 120px 0;
     position: relative;
 }
-
 .about::before {
     content: '';
     position: absolute;
@@ -219,7 +191,6 @@ header {
     align-items: center;
     color: var(--text-light);
 }
-
 .skills-list li:before {
     content: '▹';
     color: var(--primary);
@@ -228,22 +199,23 @@ header {
     font-size: 18px;
 }
 
+/* ИСПРАВЛЕНО: Картинка, которая ломала верстку */
 .about-image img {
-    width: 130%;
-    max-width: 700px;
-    height: 600px;
+    width: 100%; /* Занимает ширину родителя */
+    max-width: 600px; /* Ограничение для десктопа */
+    height: auto; /* Сохраняет пропорции вместо фиксированных 600px */
     object-fit: cover;
     border-radius: 20px;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.3);
     border: 2px solid rgba(255,255,255,0.1);
+    display: block;
 }
 
-/* Portfolio */
+/* --- Portfolio --- */
 .portfolio {
     padding: 120px 0;
     background: var(--bg-dark);
 }
-
 .portfolio h2 {
     text-align: center;
     font-size: 42px;
@@ -267,13 +239,11 @@ header {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     border: 2px solid transparent;
 }
-
 .gallery-item:hover {
     transform: translateY(-10px) scale(1.02);
     box-shadow: 0 20px 40px rgba(0,0,0,0.4);
     border-color: var(--primary);
 }
-
 .gallery-item img {
     width: 100%;
     height: 100%;
@@ -281,12 +251,11 @@ header {
     transition: transform 0.3s ease;
 }
 
-/* Conditions */
+/* --- Conditions --- */
 .conditions {
     padding: 120px 0;
     background: linear-gradient(135deg, #161b2a 0%, #0b0d17 100%);
 }
-
 .conditions h2 {
     text-align: center;
     font-size: 42px;
@@ -309,26 +278,23 @@ header {
     backdrop-filter: blur(5px);
     transition: all 0.3s ease;
 }
-
 .condition-item:hover {
     transform: translateY(-5px);
     border-color: var(--primary);
     box-shadow: 0 10px 30px rgba(79, 172, 254, 0.1);
 }
-
 .condition-item h3 {
     margin-bottom: 15px;
     color: var(--primary);
     font-size: 22px;
 }
 
-/* Socials */
+/* --- Socials --- */
 .socials {
     padding: 100px 0;
     background: var(--bg-dark);
     text-align: center;
 }
-
 .socials h2 {
     font-size: 36px;
     margin-bottom: 60px;
@@ -359,7 +325,6 @@ header {
     min-width: 220px;
     border: 1px solid rgba(255,255,255,0.1);
 }
-
 .social-link:hover {
     transform: translateY(-5px);
     box-shadow: 0 15px 35px rgba(0,0,0,0.3);
@@ -386,7 +351,7 @@ header {
     background: #27B14A;
 }
 
-/* Footer */
+/* --- Footer --- */
 footer {
     background: #0b0d17;
     color: var(--text-medium);
@@ -394,20 +359,47 @@ footer {
     padding: 60px 0 40px;
 }
 
-/* Адаптивность */
+/* --- АДАПТИВНОСТЬ --- */
+
+/* Планшеты и малые ноутбуки (до 1200px) */
+@media (max-width: 1200px) {
+    .container {
+        padding: 0 30px;
+    }
+    .hero-content, .about-inner {
+        gap: 40px;
+    }
+    .about-image img {
+        max-width: 500px; /* Уменьшаем лимит для средних экранов */
+    }
+    .hero-text h1 {
+        font-size: clamp(2.5rem, 6vw, 4rem);
+    }
+}
+
+/* Основной мобильный брейкпоинт (до 900px) */
 @media (max-width: 900px) {
+    .hero, .about, .portfolio, .conditions, .socials {
+        padding: 80px 0;
+    }
+    
     .hero-content, .about-inner {
         grid-template-columns: 1fr;
         text-align: center;
+        gap: 40px;
+    }
+    
+    .hero-image, .about-image {
+        justify-content: center;
+    }
+    
+    .hero-image img, .about-image img {
+        max-width: 100%; /* Картинка строго вписывается в экран */
+        height: auto;
     }
     
     .hero-text h1 {
         font-size: 42px;
-        
-    }
-    
-    .hero-image {
-        justify-content: center;
     }
     
     .gallery {
@@ -421,5 +413,65 @@ footer {
     
     .social-link {
         width: 80%;
+    }
+    
+    .conditions-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+/* Малые смартфоны (до 600px) */
+@media (max-width: 600px) {
+    .container {
+        padding: 0 15px;
+    }
+    
+    .hero {
+        padding: 100px 0 60px;
+    }
+    
+    .hero-text h1 {
+        font-size: 32px;
+    }
+    
+    .price-badge {
+        font-size: 16px;
+        padding: 10px 20px;
+    }
+    
+    .about-text h2, .portfolio h2, .conditions h2, .socials h2 {
+        font-size: 32px;
+        margin-bottom: 40px;
+    }
+    
+    .skills-list li {
+        font-size: 16px;
+    }
+    
+    .social-link {
+        width: 100%;
+        padding: 18px 20px;
+        font-size: 16px;
+    }
+    
+    .conditions-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .condition-item {
+        padding: 30px 20px;
+    }
+}
+
+/* Очень большие экраны (4K и выше) */
+@media (min-width: 1600px) {
+    .container {
+        max-width: 1400px;
+    }
+    .hero-content, .about-inner {
+        gap: 80px;
+    }
+    .gallery {
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
     }
 }
